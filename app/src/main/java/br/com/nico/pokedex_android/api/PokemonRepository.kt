@@ -1,10 +1,7 @@
 package br.com.nico.pokedex_android.api
 
-import android.util.Log
+import br.com.nico.pokedex_android.api.model.PokemonApiResult
 import br.com.nico.pokedex_android.api.model.PokemonsApiResult
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -20,28 +17,15 @@ object PokemonRepository {
         service = retrofit.create(PokemonService::class.java)
     }
 
-    fun listPokemons(limit: Int = 151) {
+    fun listPokemons(limit: Int = 151): PokemonsApiResult? {
         val call = service.listPokemons(limit)
 
-        call.enqueue(object : Callback<PokemonsApiResult> {
-            override fun onResponse(
-                call: Call<PokemonsApiResult>,
-                response: Response<PokemonsApiResult>
-            ) {
-                if (response.isSuccessful) {
-                    val body = response.body()
+        return call.execute().body()
+    }
 
-                    body?.results?.let {
-                        Log.d("POKEMON_API", it[0].name)
-                    }
-                }
-                Log.d("POKEMON_API", "Pokemons List Loaded")
-            }
+    fun getPokemon(number: Int): PokemonApiResult? {
+        val call = service.getPokemon(number)
 
-            override fun onFailure(call: Call<PokemonsApiResult>, t: Throwable) {
-                Log.e("POKEMON_API", "Error during pokemon list load", t)
-            }
-
-        })
+        return call.execute().body()
     }
 }

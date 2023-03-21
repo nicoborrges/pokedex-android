@@ -7,30 +7,49 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.nico.pokedex_android.R
 import br.com.nico.pokedex_android.api.PokemonRepository
 import br.com.nico.pokedex_android.domain.Pokemon
-import br.com.nico.pokedex_android.domain.PokemonType
 
 class MainActivity : AppCompatActivity() {
+    lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rvPokemonList)
+        recyclerView = findViewById(R.id.rvPokemonList)
 
-        val layoutManager = LinearLayoutManager(this)
+        Thread(Runnable {
+            loadPokemons()
+        }).start()
 
-        val bulbasaur = Pokemon(
-            "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
-            1,
-            "Bulbasaur",
-            listOf(PokemonType("Grass"), PokemonType("Poison"))
-        )
+    }
 
-        val pokemons = listOf(bulbasaur, bulbasaur, bulbasaur)
+    private fun loadPokemons() {
+        val pokemonsApiResult = PokemonRepository.listPokemons()
 
-        val pokemonsApi = PokemonRepository.listPokemons()
+        pokemonsApiResult?.results?.let {
+            val pokemons: List<Pokemon?> = it.map { pokemonResult ->
+                val number = pokemonResult.url.replace("https://pokeapi.co/api/v2/pokemon/", "")
+                    .replace("/", "").toInt()
 
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = PokemonAdapter(pokemons)
+                val pokemonApiResult = PokemonRepository.getPokemon(number)
+
+                pokemonApiResult?.let {
+                    Pokemon(
+                        pokemonApiResult.id,
+                        pokemonApiResult.name,
+                        pokemonApiResult.types.map { type ->
+                            type.type
+                        }
+                    )
+                }
+            }
+
+            val layoutManager = LinearLayoutManager(this)
+
+            recyclerView.post {
+                recyclerView.layoutManager = layoutManager
+                recyclerView.adapter = PokemonAdapter(pokemons)
+            }
+        }
 
     }
 }
