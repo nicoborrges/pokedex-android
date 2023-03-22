@@ -59,29 +59,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPokemonName">
 
-            <TextView
-                android:id="@+id/tvType1"
+            <ImageView
+                android:id="@+id/ivType1"
                 android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:background="#A4ACAF"
+                android:layout_height="30dp"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:text="type 1" />
+                android:contentDescription="Type 1 Image" />
 
-            <TextView
-                android:id="@+id/tvType2"
+            <ImageView
+                android:id="@+id/ivType2"
                 android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:background="#A4ACAF"
+                android:layout_height="30dp"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                tools:text="type 2" />
+                android:contentDescription="Type 1 Image" />
 
         </LinearLayout>
 

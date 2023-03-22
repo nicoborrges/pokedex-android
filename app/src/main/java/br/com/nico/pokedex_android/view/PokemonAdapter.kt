@@ -33,8 +33,8 @@ class PokemonAdapter(
             val ivPokemon = findViewById<ImageView>(R.id.ivPokemon)
             val tvNumber = findViewById<TextView>(R.id.tvPokemonNumber)
             val tvName = findViewById<TextView>(R.id.tvPokemonName)
-            val tvType1 = findViewById<TextView>(R.id.tvType1)
-            val tvType2 = findViewById<TextView>(R.id.tvType2)
+            val ivType1 = findViewById<ImageView>(R.id.ivType1)
+            val ivType2 = findViewById<ImageView>(R.id.ivType2)
 
             // TODO: Load image with Glide
 
@@ -50,12 +50,19 @@ class PokemonAdapter(
                 //https://veekun.com/dex/media/types/en/bug.png
                 //"https://veekun.com/dex/media/types/en/${item.types[0].name}.png"
 
-                tvType1.text = item.types[0].name.capitalize()
+                //tvType1.text = item.types[0].name.capitalize()
+
+                Picasso.get()
+                    .load("https://veekun.com/dex/media/types/en/${item.types[0].name}.png")
+                    .into(ivType1)
                 if (item.types.size > 1) {
-                    tvType2.visibility = View.VISIBLE
-                    tvType2.text = item.types[1].name.capitalize()
+                    ivType2.visibility = View.VISIBLE
+                    Picasso.get()
+                        .load("https://veekun.com/dex/media/types/en/${item.types[1].name}.png")
+                        .into(ivType2)
+                    //tvType2.text = item.types[1].name.capitalize()
                 } else {
-                    tvType2.visibility = View.GONE
+                    ivType2.visibility = View.GONE
                 }
             }
 
