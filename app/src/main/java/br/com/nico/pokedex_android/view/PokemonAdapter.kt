@@ -45,11 +45,15 @@ class PokemonAdapter(
                 //https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png
 
                 tvNumber.text = "Nº ${item.formattedNumber}"
-                tvName.text = item.name
-                tvType1.text = item.types[0].name
+                tvName.text = item.formattedName
+
+                //https://veekun.com/dex/media/types/en/bug.png
+                //"https://veekun.com/dex/media/types/en/${item.types[0].name}.png"
+
+                tvType1.text = item.types[0].name.capitalize()
                 if (item.types.size > 1) {
                     tvType2.visibility = View.VISIBLE
-                    tvType2.text = item.types[1].name
+                    tvType2.text = item.types[1].name.capitalize()
                 } else {
                     tvType2.visibility = View.GONE
                 }

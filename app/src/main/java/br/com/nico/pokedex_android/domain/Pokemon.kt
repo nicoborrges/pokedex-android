@@ -5,8 +5,9 @@ data class Pokemon(
     val name: String,
     val types: List<PokemonType>,
 ) {
+    val formattedName = name.capitalize()
     val formattedNumber = number.toString().padStart(4, '0')
-    val numberForUrl = number.toString().padStart(3, '0')
+    private val numberForUrl = number.toString().padStart(3, '0')
     val imageUrl = "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$numberForUrl.png"
 }
 
